@@ -19,14 +19,16 @@ namespace GenericClassesAndInterfaces
 
         private static void ComparingExample()
         {
-            var departments = new SortedDictionary<string, List<Employee>>();
-            departments.Add("Engineering", new List<Employee>());
+            var departments = new SortedDictionary<string, HashSet<Employee>>();
+            departments.Add("Engineering", new HashSet<Employee>());
             departments["Engineering"].Add(new Employee() { Name = "Chris", PayCode = "Salary" });
             departments["Engineering"].Add(new Employee() {Name = "Mike", PayCode = "Hourly"});
             departments["Engineering"].Add(new Employee() {Name = "Scott", PayCode = "Executive"});
+            departments["Engineering"].Add(new Employee() {Name = "Scott", PayCode = "Executive"});
 
-            departments.Add("Sales", new List<Employee>());
+            departments.Add("Sales", new HashSet<Employee>());
             departments["Sales"].Add(new Employee() { Name = "Tom", PayCode = "Salary" });
+            departments["Sales"].Add(new Employee() { Name = "Susan", PayCode = "Salary" });
             departments["Sales"].Add(new Employee() { Name = "Susan", PayCode = "Salary" });
 
             foreach (var department in departments)
