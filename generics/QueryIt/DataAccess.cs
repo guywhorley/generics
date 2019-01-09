@@ -12,7 +12,7 @@ namespace QueryIt
         public DbSet<Employee> Employees { get; set; }
     }
 
-    public interface IRepository<T> : IDisposable
+    public interface IRepository<T> : IDisposable // put contraints on the implementation NOT THE I/F
     {
         void Add(T newEntity);
         void Delete(T entity);
@@ -21,10 +21,13 @@ namespace QueryIt
         int Commit();
     }
 
+    // DESIGN STYLE: Containts are implementation details. They ought to go on the concretet class rather
+    // than the interface (Scott Allen's recommendation)
     // Constraints on the repository; class constraint MUST come first!!! The new() constraint ALWAYS comes last!!!
     public class SqlRepository<T> : IRepository<T> where T: class, IEntity, new()
     // public class SqlRepository<T> : IRepository<T> where T: Person, IEntity
     //public class SqlRepository<T, T2> : IRepository<T> where T: T2, IEntity
+    //                                                   where T2: class
     {
         private DbContext _ctx;
 
