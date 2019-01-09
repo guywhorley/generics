@@ -19,13 +19,24 @@ namespace QueryIt
                 AddEmployees(employeeRepository);
                 //CountEmployees(employeeRepository);
                 QueryEmployees(employeeRepository);
-                DumpPeople(employeeRepository);
+                DumpPeople(employeeRepository); // covariance - get more generic 
+                AddManager(employeeRepository); // contravariance - get more explicit
+                DumpPeople(employeeRepository); // covariance - get more generic 
 
                 //IEnumerable<Person> temp = employeeRepository.FindAll();
+                Console.WriteLine("Enter to continue");
+                Console.ReadLine();
 
             }
         }
 
+        private static void AddManager(IWriteOnlyRepository<Manager> employeeRepository)
+        {
+            employeeRepository.Add(new Manager {Name = "Jakob"});
+            employeeRepository.Commit();
+        }
+
+        // NOTE: Covariance Example (using base class)
         // Using a read-only-repo technique for covariance which allows base types to be used instead
         // of the more derived type.
         private static void DumpPeople(IReadOnlyRepository<Person> employeeRepository)

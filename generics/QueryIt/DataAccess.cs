@@ -13,15 +13,20 @@ namespace QueryIt
     }
 
     // NOTE: Covariance ONLY works with Interfaces and delegates
-    public interface IRepository<T> : IReadOnlyRepository<T>, IDisposable // put contraints on the implementation NOT THE I/F
+    public interface IRepository<T> : IReadOnlyRepository<T>, IWriteOnlyRepository<T> // put constr on the implementation NOT THE I/F
+    {
+    }
+
+    // NOTE: Contravariance uses the IN keyword; allows more derived classes; not used for return types
+    public interface IWriteOnlyRepository<in T> : IDisposable
     {
         void Add(T newEntity);
         void Delete(T entity);
-        T FindById(int id);
-        IQueryable<T> FindAll();
         int Commit();
     }
 
+
+    // NOTE: Covariance uses the OUT modifier; use less-derived classes
     public interface IReadOnlyRepository<out T> : IDisposable
     {
         // only include the method that RETURN T... but set T in any way.
