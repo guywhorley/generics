@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace GenericClassesAndInterfaces
 {
-
-    // NOTE: example of creating a custom comparer. Two methods must be implmented.
+    // CUSTOM COMPARER
+    // NOTE: example of creating a custom comparer.
     public class EmployeeComparer : IEqualityComparer<Employee>,
                                     IComparer<Employee>
     {
@@ -76,8 +76,6 @@ namespace GenericClassesAndInterfaces
                     Console.WriteLine($"\tEmployee: {e.Name} : {e.PayCode}");
                 }
             }
-
-
         }
 
         private static void DoThingsExample()
