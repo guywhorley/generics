@@ -22,7 +22,7 @@ namespace QueryIt
     }
 
     // adding a generic constraint
-    public class SqlRepository<T> : IRepository<T> where T: class
+    public class SqlRepository<T> : IRepository<T> where T: class, IEntity
     {
         private DbContext _ctx;
 
@@ -38,7 +38,10 @@ namespace QueryIt
 
         public void Add(T newEntity)
         {
-            _set.Add(newEntity);
+            if (newEntity.IsValid())
+            {
+                _set.Add(newEntity);
+            }
         }
 
         public int Commit()
