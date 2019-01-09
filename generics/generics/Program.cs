@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace generics
-{
+namespace generics {
+
     class Program
     {
         static void Main(string[] args)
@@ -11,10 +11,45 @@ namespace generics
             //ListExample();
             //QueueExample();
             //StackExample();
-            HashSetExample();
+            //HashSetExample();
+            //LinkedListExample();
+            DictionaryExample();
 
             Console.WriteLine("Press enter to exit");
             Console.ReadLine();
+        }
+
+        private static void DictionaryExample()
+        {
+            // NOTE: Dictionary key/val pairs; SortedDictionary will keep it all sorted :)
+            var config = new SortedDictionary<string, string>
+            //Dictionary<string, string> config = new Dictionary<string, string>
+            {
+                { "unicorn", "beasty" }, 
+                { "name", "Chris" },
+                { "dog", "Moka" },
+                { "cat", "Bella" },
+                { "Apple", "Granny Smith" }
+            };
+
+            var name = config.GetValueOrDefault("super");
+            Console.WriteLine($"Missing key: {name}");
+            Console.WriteLine($"{config["name"]}");
+
+            foreach (var item in config)
+            {
+                Console.WriteLine($"Key:{item.Key} value:{item.Value}");
+            }
+        }
+
+        private static void LinkedListExample()
+        {
+            // NOTE: LinkedList in constant time
+            LinkedList<int> list = new LinkedList<int>();
+            list.AddFirst(1024);
+            list.AddFirst(21);
+            list.AddLast(812);
+            Console.WriteLine("Check the linked list...");
         }
 
         private static void HashSetExample()
