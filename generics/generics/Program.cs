@@ -19,21 +19,10 @@ namespace generics
 
         private static void HashSetExample()
         {
-            // NOTE: HashSet - no duplicates allowed; unsorted; quick lookup (by hash); no index positions
-
-            HashSet<int> set = new HashSet<int>();
-            set.Add(1024);
-            set.Add(21);
-            set.Add(5);
-            set.Add(812);
-            set.Add(21);
-            SortedSet<int> sorted = new SortedSet<int>();
-            sorted.Add(1024);
-            sorted.Add(21);
-            sorted.Add(5);
-            sorted.Add(812);
-            sorted.Add(21);
-            Console.WriteLine($"Check the hashset for dups...");
+            // NOTE: HashSet - no duplicates allowed; unsorted; quick lookup (by hash); no index positions; SortedSet - keeps sorted
+            HashSet<int> set = new HashSet<int>() {1024, 21, 5, 812, 21};
+            SortedSet<int> sorted = new SortedSet<int> {1024, 21, 5, 812, 21};
+            Console.WriteLine("Check the hashset for dups...");
         }
 
         private static void StackExample()
@@ -43,7 +32,7 @@ namespace generics
             plates.Push("red");
             plates.Push("white");
             plates.Push("blue");
-            Console.WriteLine($"Examine stack now...");
+            Console.WriteLine("Examine stack now...");
         }
 
         private static void QueueExample()
