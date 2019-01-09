@@ -1,6 +1,6 @@
 ﻿namespace GenericClassesAndInterfaces
 {
-    class Employee
+    public class Employee
     {
         public string Name { get; set; }
 
