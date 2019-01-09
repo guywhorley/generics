@@ -8,8 +8,14 @@ namespace GenericClassesAndInterfaces
 {
 
     // NOTE: example of creating a custom comparer. Two methods must be implmented.
-    public class EmployeeComparer : IEqualityComparer<Employee>
+    public class EmployeeComparer : IEqualityComparer<Employee>,
+                                    IComparer<Employee>
     {
+        public int Compare(Employee x, Employee y)
+        {
+            return String.Compare(x.Name + x.PayCode, y.Name+y.PayCode);
+        }
+
         public bool Equals(Employee x, Employee y)
         {
             return String.Equals(x.Name + x.PayCode, y.Name+y.PayCode);
@@ -20,7 +26,6 @@ namespace GenericClassesAndInterfaces
             return (obj.Name + obj.PayCode).GetHashCode();
         }
     }
-
 
     class Program
     {
@@ -35,16 +40,17 @@ namespace GenericClassesAndInterfaces
 
         private static void ComparingExample()
         {
-            var departments = new SortedDictionary<string, HashSet<Employee>>();
+            // SortedSet sorts by KEY
+            var departments = new Dictionary<string, SortedSet<Employee>>();
 
             // NOTE: Passing in a custom comparer
-            departments.Add("Engineering", new HashSet<Employee>(new EmployeeComparer()));
+            departments.Add("Engineering", new SortedSet<Employee>(new EmployeeComparer()));
             departments["Engineering"].Add(new Employee() { Name = "Chris", PayCode = "Salary" });
             departments["Engineering"].Add(new Employee() {Name = "Mike", PayCode = "Hourly"});
             departments["Engineering"].Add(new Employee() {Name = "Scott", PayCode = "Executive"});
             departments["Engineering"].Add(new Employee() {Name = "Scott", PayCode = "Executive"});
 
-            departments.Add("Sales", new HashSet<Employee>(new EmployeeComparer()));
+            departments.Add("Sales", new SortedSet<Employee>(new EmployeeComparer()));
             departments["Sales"].Add(new Employee() { Name = "Tom", PayCode = "Salary" });
             departments["Sales"].Add(new Employee() { Name = "Susan", PayCode = "Salary" });
             departments["Sales"].Add(new Employee() { Name = "Susan", PayCode = "Salary" });
