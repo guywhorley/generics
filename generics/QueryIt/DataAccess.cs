@@ -21,8 +21,10 @@ namespace QueryIt
         int Commit();
     }
 
-    // adding a generic constraint
-    public class SqlRepository<T> : IRepository<T> where T: class, IEntity
+    // Constraints on the repository; class constraint MUST come first!!! The new() constraint ALWAYS comes last!!!
+    public class SqlRepository<T> : IRepository<T> where T: class, IEntity, new()
+    // public class SqlRepository<T> : IRepository<T> where T: Person, IEntity
+    //public class SqlRepository<T, T2> : IRepository<T> where T: T2, IEntity
     {
         private DbContext _ctx;
 
@@ -38,7 +40,7 @@ namespace QueryIt
 
         public void Add(T newEntity)
         {
-            if (newEntity.IsValid())
+            if (newEntity.IsValid()) // repo constraint allows this. 
             {
                 _set.Add(newEntity);
             }
@@ -51,7 +53,7 @@ namespace QueryIt
 
         public void Delete(T entity)
         {
-            throw new NotImplementedException();
+            _set.Remove(entity);
         }
 
         public void Dispose()
@@ -66,7 +68,11 @@ namespace QueryIt
 
         public T FindById(int id)
         {
-            throw new NotImplementedException();
+            // allowed due to NEW() constraint
+            //T entity = new T();
+            // T entity = default(T);
+            return _set.Find(id);
+            
         }
     }
 

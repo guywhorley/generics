@@ -17,8 +17,15 @@ namespace QueryIt
                 = new SqlRepository<Employee>(new EmployeeDb()))
             {
                 AddEmployees(employeeRepository);
-                CountEmployees(employeeRepository);
+                //CountEmployees(employeeRepository);
+                QueryEmployee(employeeRepository);
             }
+        }
+
+        private static void QueryEmployee(IRepository<Employee> employeeRepository)
+        {
+            var employee = employeeRepository.FindById(1);
+            Console.WriteLine($"Employee #1: {employee.Name}");
         }
 
         private static void CountEmployees(IRepository<Employee> employeeRepository)
