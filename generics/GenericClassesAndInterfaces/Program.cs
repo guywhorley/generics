@@ -27,6 +27,21 @@ namespace GenericClassesAndInterfaces
         }
     }
 
+    // creating a custom collection to help clean up program class
+    public class DepartmentCollection : SortedDictionary<string, SortedSet<Employee>>
+    {
+        public DepartmentCollection Add(string departmentName, Employee employee)
+        {
+            if (!ContainsKey(departmentName))
+            {
+                Add(departmentName,  new SortedSet<Employee>(new EmployeeComparer()));
+            }
+
+            this[departmentName].Add(employee);
+            return this; // return self for fluent syntax
+        }
+    }
+
     class Program
     {
         static void Main(string[] args)
@@ -41,22 +56,17 @@ namespace GenericClassesAndInterfaces
         private static void ComparingExample()
         {
             // SortedSet sorts by KEY
-            var departments = new Dictionary<string, SortedSet<Employee>>();
+            var departments = new DepartmentCollection();
 
-            // NOTE: Passing in a custom comparer
-            departments.Add("Engineering", new SortedSet<Employee>(new EmployeeComparer()));
-            departments["Engineering"].Add(new Employee() { Name = "Chris", PayCode = "Salary" });
-            departments["Engineering"].Add(new Employee() {Name = "Mike", PayCode = "Hourly"});
-            departments["Engineering"].Add(new Employee() {Name = "Scott", PayCode = "Executive"});
-            departments["Engineering"].Add(new Employee() {Name = "Scott", PayCode = "Executive"});
-
-            departments.Add("Sales", new SortedSet<Employee>(new EmployeeComparer()));
-            departments["Sales"].Add(new Employee() { Name = "Tom", PayCode = "Salary" });
-            departments["Sales"].Add(new Employee() { Name = "Susan", PayCode = "Salary" });
-            departments["Sales"].Add(new Employee() { Name = "Susan", PayCode = "Salary" });
-            departments["Sales"].Add(new Employee() { Name = "Susan", PayCode = "Hourly" });
-
-
+            departments
+                .Add("Engineering", new Employee() { Name = "Chris", PayCode = "Salary" })
+                .Add("Engineering", new Employee() {Name = "Mike", PayCode = "Hourly"})
+                .Add("Engineering", new Employee() {Name = "Scott", PayCode = "Executive"})
+                .Add("Engineering", new Employee() {Name = "Scott", PayCode = "Executive"})
+                .Add("Sales", new Employee() { Name = "Tom", PayCode = "Salary" })
+                .Add("Sales", new Employee() { Name = "Susan", PayCode = "Salary" })
+                .Add("Sales", new Employee() { Name = "Susan", PayCode = "Salary" })
+                .Add("Sales", new Employee() { Name = "Susan", PayCode = "Hourly" });
 
             foreach (var department in departments)
             {
