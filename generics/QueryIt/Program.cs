@@ -18,11 +18,26 @@ namespace QueryIt
             {
                 AddEmployees(employeeRepository);
                 //CountEmployees(employeeRepository);
-                QueryEmployee(employeeRepository);
+                QueryEmployees(employeeRepository);
+                DumpPeople(employeeRepository);
+
+                //IEnumerable<Person> temp = employeeRepository.FindAll();
+
             }
         }
 
-        private static void QueryEmployee(IRepository<Employee> employeeRepository)
+        // Using a read-only-repo technique for covariance which allows base types to be used instead
+        // of the more derived type.
+        private static void DumpPeople(IReadOnlyRepository<Person> employeeRepository)
+        {
+            var employees = employeeRepository.FindAll();
+            foreach (var employee in employees)
+            {
+                Console.WriteLine($"Employee: {employee.Name}");
+            }
+        }
+
+        private static void QueryEmployees(IRepository<Employee> employeeRepository)
         {
             var employee = employeeRepository.FindById(1);
             Console.WriteLine($"Employee #1: {employee.Name}");

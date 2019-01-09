@@ -12,7 +12,8 @@ namespace QueryIt
         public DbSet<Employee> Employees { get; set; }
     }
 
-    public interface IRepository<T> : IDisposable // put contraints on the implementation NOT THE I/F
+    // NOTE: Covariance ONLY works with Interfaces and delegates
+    public interface IRepository<T> : IReadOnlyRepository<T>, IDisposable // put contraints on the implementation NOT THE I/F
     {
         void Add(T newEntity);
         void Delete(T entity);
@@ -20,6 +21,14 @@ namespace QueryIt
         IQueryable<T> FindAll();
         int Commit();
     }
+
+    public interface IReadOnlyRepository<out T> : IDisposable
+    {
+        // only include the method that RETURN T... but set T in any way.
+        T FindById(int id);
+        IQueryable<T> FindAll();
+    }
+
 
     // DESIGN STYLE: Containts are implementation details. They ought to go on the concretet class rather
     // than the interface (Scott Allen's recommendation)
