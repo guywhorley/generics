@@ -22,14 +22,14 @@ namespace QueryIt
     }
 
     // adding a generic constraint
-    public class SqlRepositry<T> : IRepository<T> where T: class
+    public class SqlRepository<T> : IRepository<T> where T: class
     {
         private DbContext _ctx;
 
         // DbSet requires that T be a class
         private DbSet<T> _set;
 
-        public SqlRepositry(DbContext ctx)
+        public SqlRepository(DbContext ctx)
         {
             _ctx = ctx;
             _set = _ctx.Set<T>();
@@ -58,7 +58,7 @@ namespace QueryIt
 
         public IQueryable<T> FindAll()
         {
-            throw new NotImplementedException();
+            return _set;
         }
 
         public T FindById(int id)
